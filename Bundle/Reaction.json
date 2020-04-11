@@ -1,0 +1,51 @@
+[
+    {
+        "id": "1",
+        "imagepattern": "(:people:face-with-tears-of-joy:)",
+        "pattern": "(:animations:face_with_tears_of_joy:)",
+        "name": "Face With Tears Of Joy",
+        "emoji": "https://joypixel.s3-ap-southeast-2.amazonaws.com/animations/face_with_tears_of_joy.gif"
+    },
+    {
+        "id": "2",
+        "imagepattern": "(:symbols:growing-heart:)",
+        "pattern": "(:animations:growing_heart:)",
+        "name": "Growing Heart",
+        "emoji": "https://joypixel.s3-ap-southeast-2.amazonaws.com/animations/growing_heart.gif"
+    },
+    {
+        "id": "3",
+        "imagepattern": "(:people:smiling-face:)",
+        "pattern": "(:animations:smiling_face:)",
+        "name": "Smiling Face",
+        "emoji": "https://joypixel.s3-ap-southeast-2.amazonaws.com/animations/smiling_face.gif"
+    },
+    {
+        "id": "4",
+        "imagepattern": "(:people:crying-face:)",
+        "pattern": "(:animations:crying_face:)",
+        "name": "Crying Face",
+        "emoji": "https://joypixel.s3-ap-southeast-2.amazonaws.com/animations/crying_face.gif"
+    },
+    {
+        "id": "5",
+        "imagepattern": "(:people:thumbs-up:)",
+        "pattern": "(:animations:thumbs_up:)",
+        "name": "Thumbs up",
+        "emoji": "https://joypixel.s3-ap-southeast-2.amazonaws.com/animations/thumbs_up.gif"
+    },
+    {
+        "id": "6",
+        "imagepattern": "(:people:face-blowing-a-kiss:)",
+        "pattern": "(:animations:face_blowing_a_kiss:)",
+        "name": "Face blowing a kiss",
+        "emoji": "https://joypixel.s3-ap-southeast-2.amazonaws.com/animations/face_blowing_a_kiss.gif"
+    },
+    {
+        "id": "7",
+        "imagepattern": "(:people:smiling-face-with-heart-eyes:)",
+        "pattern": "(:animations:smiling_face_with_heart_eyes:)",
+        "name": "Smiling Face With Heart Eyes",
+        "emoji": "https://joypixel.s3-ap-southeast-2.amazonaws.com/animations/smiling_face_with_heart_eyes.gif"
+    }
+]
