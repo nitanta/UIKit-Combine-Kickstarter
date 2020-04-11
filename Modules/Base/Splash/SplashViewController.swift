@@ -19,7 +19,8 @@ class SplashViewController: UIViewController {
         let vc = ListViewController.initialize(.list)
         let vm = ListViewModelImplementation()
         vc.listviewModel = vm
-        self.navigationController?.pushViewController(vc, animated: true)
+        let nav = UINavigationController(rootViewController: vc)
+        UIApplication.shared.windows.first!.rootViewController = nav
     }
     
 }
