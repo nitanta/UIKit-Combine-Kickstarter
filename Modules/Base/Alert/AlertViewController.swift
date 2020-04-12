@@ -47,15 +47,15 @@ class AlertViewController: ViewController {
         
         vm.text.sink { (value) in
             self.textLabel.text = value
-        }.cancel()
+        }.store(in: &bag)
         
         vm.bottomText.sink { (value) in
             self.bottomButton.setTitle(value, for: .normal)
-        }.cancel()
+        }.store(in: &bag)
         
         vm.topText.sink { (value) in
             self.topButton.setTitle(value, for: .normal)
-        }.cancel()
+        }.store(in: &bag)
     }
     
     override func viewDidLayoutSubviews() {

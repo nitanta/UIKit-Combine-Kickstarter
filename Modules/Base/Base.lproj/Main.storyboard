@@ -39,7 +39,7 @@
         <!--Alert View Controller-->
         <scene sceneID="8se-of-jGS">
             <objects>
-                <viewController id="gMF-z7-NWs" customClass="AlertViewController" customModule="KickStarter" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AlertViewController" id="gMF-z7-NWs" customClass="AlertViewController" customModule="KickStarter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Tqx-dL-giM">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -65,9 +65,8 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DzL-Ql-DPl">
-                                                <rect key="frame" x="60" y="210" width="200" height="60"/>
+                                                <rect key="frame" x="140" y="210" width="40" height="60"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="200" id="C3I-GX-DMG"/>
                                                     <constraint firstAttribute="height" constant="60" id="D6N-IG-ior"/>
                                                 </constraints>
                                                 <state key="normal" title="OKAY"/>
@@ -76,9 +75,8 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z29-Uc-yl7">
-                                                <rect key="frame" x="60" y="280" width="200" height="60"/>
+                                                <rect key="frame" x="140" y="280" width="40" height="60"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="200" id="o10-ca-V1Z"/>
                                                     <constraint firstAttribute="height" constant="60" id="srT-la-uxR"/>
                                                 </constraints>
                                                 <state key="normal" title="OKAY"/>

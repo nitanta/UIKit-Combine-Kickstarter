@@ -19,12 +19,28 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GZr-es-aaY">
+                                <rect key="frame" x="167" y="423" width="80" height="60"/>
+                                <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="YFb-mZ-h3e"/>
+                                    <constraint firstAttribute="height" constant="60" id="Ymh-x5-lka"/>
+                                </constraints>
+                                <state key="normal" title="TAP">
+                                    <color key="titleColor" red="0.48642367120000002" green="0.18812552090000001" blue="0.55203086140000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonTapped:" destination="jx3-Ur-sZd" eventType="touchUpInside" id="JtW-Ry-Hog"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="Lw5-1I-etp" firstAttribute="trailing" secondItem="mRO-AC-laP" secondAttribute="trailing" id="363-Tj-bTu"/>
+                            <constraint firstItem="GZr-es-aaY" firstAttribute="centerY" secondItem="Lw5-1I-etp" secondAttribute="centerY" id="G9x-eZ-aPa"/>
                             <constraint firstItem="Lw5-1I-etp" firstAttribute="bottom" secondItem="mRO-AC-laP" secondAttribute="bottom" id="GN8-OI-DSh"/>
                             <constraint firstItem="mRO-AC-laP" firstAttribute="leading" secondItem="Lw5-1I-etp" secondAttribute="leading" id="StV-iI-elp"/>
+                            <constraint firstItem="GZr-es-aaY" firstAttribute="centerX" secondItem="Lw5-1I-etp" secondAttribute="centerX" id="VNj-ud-iYd"/>
                             <constraint firstItem="mRO-AC-laP" firstAttribute="top" secondItem="Lw5-1I-etp" secondAttribute="top" id="gIj-LH-2bR"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Lw5-1I-etp"/>

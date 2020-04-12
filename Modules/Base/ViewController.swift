@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     var backgroundImageView: UIImageView!
     var width:CGFloat!
     var viewModel: ViewModel!
+    var bag: Set<AnyCancellable> = Set()
     
     deinit {
         debugPrint("DEINIT:::: \(String(describing: self))")
@@ -21,9 +22,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationBar()
         setupUI()
         setupObservers()
+        setupNavigationBar()
         bind()
     }
     
@@ -39,6 +40,7 @@ class ViewController: UIViewController {
         backgroundImageView.contentMode = .scaleAspectFill
         view.addSubview(backgroundImageView)
         backgroundImageView.fillSuperView()
+        view.sendSubviewToBack(backgroundImageView)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGesture.cancelsTouchesInView = false
@@ -57,21 +59,25 @@ class ViewController: UIViewController {
             }else{
                 self.dismissLoader()
             }
-        }.cancel()
+        }.store(in: &bag)
         
         viewModel.alertViewModel.sink { (vm) in
             let vc = AlertViewController.initialize(.main)
             vc.vm = vm
             self.navigationController?.present(vc, animated: true, completion: nil)
-        }.cancel()
+        }.store(in: &bag)
         
         viewModel.logout.sink { (_) in
-            
-        }.cancel()
+
+        }.store(in: &bag)
         
         viewModel.snackBar.filter { $0 != nil }.sink { (value) in
             self.showSnackBar(message: value ?? "")
-        }.cancel()
+        }.store(in: &bag)
+        
+        viewModel.snackBar.delay(for: .seconds(2), scheduler: RunLoop.main).filter { $0 != nil }.sink { (value) in
+            self.dismissSnackBar()
+            }.store(in: &bag)
         
     }
     
@@ -91,13 +97,14 @@ class ViewController: UIViewController {
     
     
     func showSnackBar(message: String){
-        let backgroundView = UIView(frame: CGRect(x: width * 0.1, y: 120, width: width * 0.8, height: width * 0.15))
-        backgroundView.backgroundColor = AppColor.Alpha32
-        backgroundView.layer.cornerRadius = 10
-        backgroundView.clipsToBounds = true
+        let wrapperView = UIView(frame: CGRect(x: width * 0.1, y: 120, width: width * 0.8, height: width * 0.15))
+        wrapperView.backgroundColor = AppColor.Alpha32
+        wrapperView.layer.cornerRadius = 10
+        wrapperView.clipsToBounds = true
         
         let imageView = UIImageView(image: #imageLiteral(resourceName: "logo"))
         imageView.contentMode = .scaleAspectFit
+        imageView.heightAnchor.constraint(equalToConstant: 120).isActive = true
         imageView.anchor(top: nil, paddingTop: 0, bottom: nil, paddingBottom: 0, left: nil, paddingLeft: 0, right: nil, paddingRight: 0, width: 120, height: 120)
         
         let text = UILabel()
@@ -112,13 +119,13 @@ class ViewController: UIViewController {
         stack.alignment = .center
         stack.spacing = width * 0.02
         
-        backgroundView.addSubview(stack)
-        backgroundView.tag = 999
+        wrapperView.addSubview(stack)
+        wrapperView.tag = 999
         
-        stack.anchor(top: self.view.topAnchor, paddingTop: width * 0.2, bottom: nil, paddingBottom: 0.0, left: self.view.leftAnchor, paddingLeft: width * 0.2, right: self.view.rightAnchor, paddingRight: width * 0.2, width: 0.0, height: width * 0.35)
+        stack.anchor(top: wrapperView.topAnchor, paddingTop: 10.0, bottom: wrapperView.bottomAnchor, paddingBottom: 10.0, left: wrapperView.leftAnchor, paddingLeft: 10.0, right: wrapperView.rightAnchor, paddingRight: 10.0, width: 0.0, height: 0.0)
         
         let root  = UIApplication.shared.windows.first!.rootViewController
-        root?.view.addSubview(backgroundView)
+        root?.view.addSubview(wrapperView)
         
     }
     
@@ -146,8 +153,8 @@ class ViewController: UIViewController {
         activityIndicator.center = background.center
         activityIndicator.startAnimating()
         
-        let app  = UIApplication.shared.delegate as! SceneDelegate
-        app.window?.rootViewController?.view.addSubview(background)
+        let root  = UIApplication.shared.windows.first!.rootViewController
+        root?.view.addSubview(activityIndicator)
         
     }
     

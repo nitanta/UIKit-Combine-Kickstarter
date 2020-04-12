@@ -16,5 +16,6 @@ class ViewModelImplementation: ViewModel {
     var logout: PassthroughSubject<Void, Never> = PassthroughSubject<Void, Never>()
     var alertViewModel: PassthroughSubject<AlertViewModel, Never> = PassthroughSubject<AlertViewModel, Never>()
     init() {
+
     }
 }

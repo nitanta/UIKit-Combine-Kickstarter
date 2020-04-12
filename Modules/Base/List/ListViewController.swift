@@ -11,17 +11,32 @@ import UIKit
 class ListViewController: ViewController {
     var listviewModel: ListViewModel!
     override func viewDidLoad() {
+        super.viewModel = listviewModel
         super.viewDidLoad()
     }
     
     override func setupObservers() {
-        super.viewModel = listviewModel
         super.setupObservers()
         
-        let alertVM = AlertViewModelImplementation(topTap: nil) { [weak self] in
-            guard let wSelf = self else { return }
-            print("Second button tap")
-        }
-        listviewModel.alertViewModel.send(alertVM)
+    }
+    
+    override func setupUI() {
+        super.setupUI()
+    }
+    
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        
+    }
+    
+    override func bind() {
+        super.bind()
+    }
+    
+    @IBAction func buttonTapped(_ sender: Any) {
+        //listviewModel.isLoading.send(true)
+        listviewModel.snackBar.send("This is a snackbar")
+        //listviewModel.logout.send(Void())
+        //listviewModel.alertViewModel.send(AlertViewModelImplementation(topTap: nil, bottomTap: nil))
     }
 }
