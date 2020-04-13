@@ -22,7 +22,7 @@ class ListViewModelImplementation: ViewModelImplementation, ListViewModel {
         let callrequest = callApi.handleEvents { (_) in
             self.isLoading.send(true)
         }.flatMap {_ in
-            return APIService.sharedAPIService.request(route: .wheather).eraseToAnyPublisher().mapError { $0 }
+            return APIService.sharedAPIService.request(route: .albums).eraseToAnyPublisher().mapError { $0 }
         }.handleEvents(receiveRequest: { (_) in
             self.isLoading.send(false)
         }).share()
