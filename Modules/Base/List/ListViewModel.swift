@@ -12,4 +12,5 @@ import Combine
 protocol ListViewModel:ViewModel {
     var callApi: PassthroughSubject<Void, APIError> { get }
     var albums: CurrentValueSubject<[Album], Never> { get }
+    func refresh()
 }

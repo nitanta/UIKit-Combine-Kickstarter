@@ -16,4 +16,5 @@ protocol AlertViewModel:ViewModel {
     var bottomAction: PassthroughSubject<Void, Never> { get }
     var topText: CurrentValueSubject<String, Never> { get }
     var bottomText: CurrentValueSubject<String, Never> { get }
+    var hideBottom: CurrentValueSubject<Bool, Never> { get }
 }

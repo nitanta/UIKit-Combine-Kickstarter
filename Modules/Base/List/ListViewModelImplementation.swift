@@ -22,10 +22,10 @@ class ListViewModelImplementation: ViewModelImplementation, ListViewModel {
         let callrequest = callApi.handleEvents { (_) in
             self.isLoading.send(true)
         }.flatMap {_ in
-            return APIService.sharedAPIService.request(route: .albums).eraseToAnyPublisher().mapError { $0 }
-        }.handleEvents(receiveRequest: { (_) in
-            self.isLoading.send(false)
-        }).share()
+            return APIService.sharedAPIService.request(route: .albums).handleEvents(receiveRequest: { (_) in
+                self.isLoading.send(false)
+            }).eraseToAnyPublisher().mapError { $0 }
+        }.share()
         
         callrequest.sink(receiveCompletion: { (data) in
             switch data {
@@ -39,9 +39,23 @@ class ListViewModelImplementation: ViewModelImplementation, ListViewModel {
                 break
             }
         }, receiveValue: { (response) in
-            let albums = try! JSONDecoder().decode([Album].self, from: response.result)
-            self.albums.send(albums)
+            if response.meta.code == 200 {
+                let albums = try! JSONDecoder().decode([Album].self, from: response.result)
+                self.albums.send(albums)
+            } else if response.meta.code == 401 {
+                self.logout.send(Void())
+            } else {
+                let alert = AlertViewModelImplementation(topTap: nil, bottomTap: nil)
+                alert.topText.send("TRY AGAIN")
+                alert.bottomText.send("OKAY")
+                alert.text.send(response.meta.message)
+                self.alertViewModel.send(alert)
+            }
         }).store(in: &bag)
         
+    }
+    
+    func refresh() {
+        self.callApi.send(Void())
     }
 }

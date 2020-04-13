@@ -44,7 +44,7 @@ class AlertViewController: ViewController {
     
     override func setupObservers() {
         super.setupObservers()
-        
+        guard let vm = vm else { return }
         vm.text.subscribe(on: RunLoop.main).sink { (value) in
             self.textLabel.text = value
         }.store(in: &bag)

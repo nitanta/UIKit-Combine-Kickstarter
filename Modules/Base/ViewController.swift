@@ -16,8 +16,18 @@ class ViewController: UIViewController {
     var viewModel: ViewModel!
     var bag: Set<AnyCancellable> = Set()
     
+    let titleLabelFrameWithoutBackButton = CGRect(x: 20, y: 0, width: UIScreen.main.bounds.width, height: 40)
+    let titleLabelFrameWithBackButton =  CGRect(x: 10, y: 0, width: UIScreen.main.bounds.width, height: 40)
+    var backButtonTapped: (() -> Void)?
+
+    
     deinit {
         debugPrint("DEINIT:::: \(String(describing: self))")
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     override func viewDidLoad() {
@@ -67,8 +77,20 @@ class ViewController: UIViewController {
             self.navigationController?.present(vc, animated: true, completion: nil)
         }.store(in: &bag)
         
-        viewModel.logout.receive(on: RunLoop.main).sink { (_) in
-
+        viewModel.logout.receive(on: DispatchQueue.main).sink { (_) in
+            let vc = AlertViewController.initialize(.main)
+            let vm = AlertViewModelImplementation(topTap: {
+                //let vc = SplashViewController.initialize(.main)
+                //UIApplication.shared.windows.first!.rootViewController = vc
+            }, bottomTap: nil)
+            vm.text.send("It seems that the authrizatio token is no longer valid.")
+            vm.topText.send("OKAY")
+            vm.hideBottom.send(true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                vc.topTapped(self)
+            }
+            vc.vm = vm
+            self.navigationController?.present(vc, animated: true, completion: nil)
         }.store(in: &bag)
         
         viewModel.snackBar.subscribe(on: RunLoop.main).filter { $0 != nil }.sink { (value) in
@@ -82,7 +104,6 @@ class ViewController: UIViewController {
     }
     
     func bind() {
-        guard let viewModel = viewModel else { return }
 
     }
     
@@ -171,6 +192,76 @@ class ViewController: UIViewController {
                 item.removeFromSuperview()
             }
         }
+    }
+    
+    func defaultSetup() {
+        navigationItem.setHidesBackButton(true, animated: false)
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+    }
+    
+    func configureCustomBackButton() {
+        if !isBeingPresented && navigationController?.viewControllers.first != self {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(customView: getBackButton())
+            isBackButtonHidden = false
+        }
+    }
+    
+    func configureCustomTitleView() {
+        navigationItem.titleView = getTitleViewWith(title: navigationBarTitle)
+    }
+    
+    var navigationBarTitle: String? {
+        didSet {
+            configureCustomTitleView()
+        }
+    }
+    
+    var isBackButtonHidden: Bool = true {
+        didSet {
+            if isBackButtonHidden {
+                navigationItem.leftBarButtonItem = nil
+                configureCustomTitleView()
+            }
+        }
+    }
+    
+    var isNavigationBarHidden: Bool = false {
+        didSet {
+            navigationController?.setNavigationBarHidden(isNavigationBarHidden, animated: false)
+        }
+    }
+    
+    @objc private func leftBarButtonTapped() {
+        if backButtonTapped == nil {
+            navigationController?.popViewController(animated: true)
+        } else {
+            backButtonTapped?()
+        }
+    }
+    
+    private func getBackButton() -> UIButton {
+        let backButton = UIButton(type: .system)
+        backButton.backgroundColor = .red
+        backButton.frame = CGRect(x: 0.0, y: 0, width: 35, height: 40.0)
+        backButton.imageEdgeInsets = UIEdgeInsets(top: -4, left: -10, bottom: 0, right: 0)
+        
+        backButton.backgroundColor = .clear
+        backButton.addTarget(self, action: #selector(leftBarButtonTapped), for: .touchUpInside)
+        //backButton.setImage(#imageLiteral(resourceName: "leftArrow"), for: .normal)
+        return backButton
+    }
+    
+    private func getTitleViewWith(title: String?) -> UIView {
+        let titleView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.width, height: 44.0))
+        
+        let titleLabel = UILabel()
+        titleView.addSubview(titleLabel)
+        titleLabel.frame = isBackButtonHidden ? titleLabelFrameWithoutBackButton : titleLabelFrameWithBackButton
+        
+        titleLabel.font = AppFont.Font16
+        titleLabel.text = title
+        titleLabel.textAlignment = .left
+        return titleView
     }
 }
 

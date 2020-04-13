@@ -9,7 +9,15 @@
 import UIKit
 
 class ListViewController: ViewController {
+    @IBOutlet weak var listTableView: UITableView!
     var listviewModel: ListViewModel!
+    
+    let refreshControler: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh), for: .touchUpInside)
+        return refreshControl
+    }()
+    
     override func viewDidLoad() {
         super.viewModel = listviewModel
         super.viewDidLoad()
@@ -22,6 +30,7 @@ class ListViewController: ViewController {
     
     override func setupUI() {
         super.setupUI()
+        listTableView.refreshControl = refreshControler
     }
     
     override func setupNavigationBar() {
@@ -39,5 +48,10 @@ class ListViewController: ViewController {
         //listviewModel.snackBar.send("This is a snackbar")
         //listviewModel.logout.send(Void())
         //listviewModel.alertViewModel.send(AlertViewModelImplementation(topTap: nil, bottomTap: nil))
+    }
+    
+    @objc func refresh() {
+        guard let listviewModel = listviewModel else { return }
+        listviewModel.refresh()
     }
 }

@@ -15,6 +15,7 @@ class AlertViewModelImplementation: ViewModelImplementation, AlertViewModel {
     var bottomAction: PassthroughSubject<Void, Never> = PassthroughSubject<Void, Never>()
     var topText: CurrentValueSubject<String, Never> = CurrentValueSubject("Okay")
     var bottomText: CurrentValueSubject<String, Never> = CurrentValueSubject("Try again")
+    var hideBottom: CurrentValueSubject<Bool, Never> = CurrentValueSubject(false)
     
     init(topTap: (() -> Void)?, bottomTap: (() -> Void)?) {
         super.init()

@@ -20,7 +20,8 @@ struct ApiResponse: Codable {
     init(from decoder: Decoder) throws {
         let container = try! decoder.container(keyedBy: CodingKeys.self)
         self.meta   = try container.decode(Meta.self, forKey: .meta)
-        self.result  = try container.decode(Data.self, forKey: .result)
+        let dataDict: [String: Any] = try container.decode([String: Any].self, forKey: .result)
+        self.result  = dataDict.dataRepresentation ?? Data()
     }
 }
 

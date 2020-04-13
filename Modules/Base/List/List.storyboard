@@ -45,6 +45,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Lw5-1I-etp"/>
                     </view>
+                    <connections>
+                        <outlet property="listTableView" destination="mRO-AC-laP" id="gfk-t0-z5R"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yDT-rP-xsi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
