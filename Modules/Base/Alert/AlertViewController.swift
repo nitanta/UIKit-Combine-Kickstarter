@@ -45,15 +45,15 @@ class AlertViewController: ViewController {
     override func setupObservers() {
         super.setupObservers()
         
-        vm.text.sink { (value) in
+        vm.text.subscribe(on: RunLoop.main).sink { (value) in
             self.textLabel.text = value
         }.store(in: &bag)
         
-        vm.bottomText.sink { (value) in
+        vm.bottomText.subscribe(on: RunLoop.main).sink { (value) in
             self.bottomButton.setTitle(value, for: .normal)
         }.store(in: &bag)
         
-        vm.topText.sink { (value) in
+        vm.topText.subscribe(on: RunLoop.main).sink { (value) in
             self.topButton.setTitle(value, for: .normal)
         }.store(in: &bag)
     }

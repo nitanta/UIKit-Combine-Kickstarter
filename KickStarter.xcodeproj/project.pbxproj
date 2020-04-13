@@ -27,7 +27,7 @@
 		6A1933512441CACD00C9A829 /* UICollectionViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1933452441CACD00C9A829 /* UICollectionViewExtension.swift */; };
 		6A1933522441CACD00C9A829 /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1933462441CACD00C9A829 /* UITableViewExtension.swift */; };
 		6A1933532441CACD00C9A829 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1933472441CACD00C9A829 /* UIApplicationExtension.swift */; };
-		6A1933562441CB2000C9A829 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1933542441CB2000C9A829 /* User.swift */; };
+		6A1933562441CB2000C9A829 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1933542441CB2000C9A829 /* Album.swift */; };
 		6A1933572441CB2000C9A829 /* ApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1933552441CB2000C9A829 /* ApiResponse.swift */; };
 		6A19335A2441CB4000C9A829 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1933582441CB4000C9A829 /* Font.swift */; };
 		6A19335B2441CB4000C9A829 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1933592441CB4000C9A829 /* Color.swift */; };
@@ -97,7 +97,7 @@
 		6A1933452441CACD00C9A829 /* UICollectionViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtension.swift; sourceTree = "<group>"; };
 		6A1933462441CACD00C9A829 /* UITableViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
 		6A1933472441CACD00C9A829 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
-		6A1933542441CB2000C9A829 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		6A1933542441CB2000C9A829 /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		6A1933552441CB2000C9A829 /* ApiResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiResponse.swift; sourceTree = "<group>"; };
 		6A1933582441CB4000C9A829 /* Font.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		6A1933592441CB4000C9A829 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
@@ -258,7 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				6A1933552441CB2000C9A829 /* ApiResponse.swift */,
-				6A1933542441CB2000C9A829 /* User.swift */,
+				6A1933542441CB2000C9A829 /* Album.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -626,7 +626,7 @@
 				6A1933532441CACD00C9A829 /* UIApplicationExtension.swift in Sources */,
 				6A1933522441CACD00C9A829 /* UITableViewExtension.swift in Sources */,
 				6A19334B2441CACD00C9A829 /* UIViewControllerExtension.swift in Sources */,
-				6A1933562441CB2000C9A829 /* User.swift in Sources */,
+				6A1933562441CB2000C9A829 /* Album.swift in Sources */,
 				6A19330D2441C74400C9A829 /* KickStarter.xcdatamodeld in Sources */,
 				6A19336D2441D61000C9A829 /* ViewModel.swift in Sources */,
 				6A19336F2441D61D00C9A829 /* ViewModelImplementation.swift in Sources */,

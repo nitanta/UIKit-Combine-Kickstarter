@@ -31,11 +31,12 @@ class ListViewController: ViewController {
     
     override func bind() {
         super.bind()
+        listviewModel.callApi.send(Void())
     }
     
     @IBAction func buttonTapped(_ sender: Any) {
         //listviewModel.isLoading.send(true)
-        listviewModel.snackBar.send("This is a snackbar")
+        //listviewModel.snackBar.send("This is a snackbar")
         //listviewModel.logout.send(Void())
         //listviewModel.alertViewModel.send(AlertViewModelImplementation(topTap: nil, bottomTap: nil))
     }

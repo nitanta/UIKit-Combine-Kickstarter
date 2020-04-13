@@ -15,7 +15,7 @@ struct Global {
     }
     
    static var baseUrl: String{
-        return "http://173.249.37.107:8282"
+        return "https://community-open-weather-map.p.rapidapi.com"
     }
 }
 

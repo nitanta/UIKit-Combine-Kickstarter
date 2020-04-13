@@ -10,9 +10,38 @@ import Foundation
 import Combine
 
 class ListViewModelImplementation: ViewModelImplementation, ListViewModel {
-    var tap: PassthroughSubject<Void, Never> = PassthroughSubject<Void, Never>()
+    var callApi: PassthroughSubject<Void, APIError> = PassthroughSubject<Void, APIError>()
+    var albums: CurrentValueSubject<[Album], Never> = CurrentValueSubject([])
     
     override init() {
         super.init()
+        callApiObserver()
+    }
+    
+    func callApiObserver() {
+        let callrequest = callApi.handleEvents { (_) in
+            self.isLoading.send(true)
+        }.flatMap {_ in
+            return APIService.sharedAPIService.request(route: .wheather).eraseToAnyPublisher().mapError { $0 }
+        }.handleEvents(receiveRequest: { (_) in
+            self.isLoading.send(false)
+        }).share()
+        
+        callrequest.sink(receiveCompletion: { (data) in
+            switch data {
+            case .failure(let error):
+                let alert = AlertViewModelImplementation(topTap: nil, bottomTap: nil)
+                alert.topText.send("TRY AGAIN")
+                alert.bottomText.send("OKAY")
+                alert.text.send(error.localizedDescription)
+                self.alertViewModel.send(alert)
+            case .finished:
+                break
+            }
+        }, receiveValue: { (response) in
+            let albums = try! JSONDecoder().decode([Album].self, from: response.result)
+            self.albums.send(albums)
+        }).store(in: &bag)
+        
     }
 }

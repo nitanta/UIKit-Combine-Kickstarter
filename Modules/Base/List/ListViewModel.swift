@@ -10,6 +10,6 @@ import Foundation
 import Combine
 
 protocol ListViewModel:ViewModel {
-    var tap: PassthroughSubject<Void, Never> { get }
-
+    var callApi: PassthroughSubject<Void, APIError> { get }
+    var albums: CurrentValueSubject<[Album], Never> { get }
 }

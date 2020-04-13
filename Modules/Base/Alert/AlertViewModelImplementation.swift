@@ -15,16 +15,14 @@ class AlertViewModelImplementation: ViewModelImplementation, AlertViewModel {
     var bottomAction: PassthroughSubject<Void, Never> = PassthroughSubject<Void, Never>()
     var topText: CurrentValueSubject<String, Never> = CurrentValueSubject("Okay")
     var bottomText: CurrentValueSubject<String, Never> = CurrentValueSubject("Try again")
-    var bag: Set<AnyCancellable> = Set()
     
     init(topTap: (() -> Void)?, bottomTap: (() -> Void)?) {
-        let topcancel = topAction.sink { (_) in
+        super.init()
+        topAction.sink { (_) in
             topTap?()
-        }
-        topcancel.store(in: &bag)
-        let bottomcancel = bottomAction.sink { (_) in
+        }.store(in: &bag)
+        bottomAction.sink { (_) in
             bottomTap?()
-        }
-        bottomcancel.store(in: &bag)
+        }.store(in: &bag)
     }
 }

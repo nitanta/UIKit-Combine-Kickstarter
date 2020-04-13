@@ -52,7 +52,7 @@ class ViewController: UIViewController {
     
     func setupObservers() {
         guard let viewModel = viewModel else { return }
-        viewModel.isLoading.sink { (flag) in
+        viewModel.isLoading.subscribe(on: RunLoop.main).sink { (flag) in
             if flag {
                 self.view.endEditing(true)
                 self.presentLoader()
@@ -61,23 +61,23 @@ class ViewController: UIViewController {
             }
         }.store(in: &bag)
         
-        viewModel.alertViewModel.sink { (vm) in
+        viewModel.alertViewModel.receive(on: DispatchQueue.main).sink { (vm) in
             let vc = AlertViewController.initialize(.main)
             vc.vm = vm
             self.navigationController?.present(vc, animated: true, completion: nil)
         }.store(in: &bag)
         
-        viewModel.logout.sink { (_) in
+        viewModel.logout.receive(on: RunLoop.main).sink { (_) in
 
         }.store(in: &bag)
         
-        viewModel.snackBar.filter { $0 != nil }.sink { (value) in
+        viewModel.snackBar.subscribe(on: RunLoop.main).filter { $0 != nil }.sink { (value) in
             self.showSnackBar(message: value ?? "")
         }.store(in: &bag)
         
-        viewModel.snackBar.delay(for: .seconds(2), scheduler: RunLoop.main).filter { $0 != nil }.sink { (value) in
+        viewModel.snackBar.subscribe(on: RunLoop.main).delay(for: .seconds(2), scheduler: RunLoop.main).filter { $0 != nil }.sink { (value) in
             self.dismissSnackBar()
-            }.store(in: &bag)
+        }.store(in: &bag)
         
     }
     
