@@ -22,7 +22,7 @@ class ListViewModelImplementation: ViewModelImplementation, ListViewModel {
         let callrequest = callApi.handleEvents { (_) in
             self.isLoading.send(true)
         }.flatMap {_ in
-            return APIService.sharedAPIService.request(route: .albums).handleEvents(receiveRequest: { (_) in
+            return APIService<[Album]>().request(route: .albums).handleEvents(receiveRequest: { (_) in
                 self.isLoading.send(false)
             }).eraseToAnyPublisher().mapError { $0 }
         }.share()
@@ -40,8 +40,7 @@ class ListViewModelImplementation: ViewModelImplementation, ListViewModel {
             }
         }, receiveValue: { (response) in
             if response.meta.code == 200 {
-                let albums = try! JSONDecoder().decode([Album].self, from: response.result)
-                self.albums.send(albums)
+                self.albums.send(response.result ?? [])
             } else if response.meta.code == 401 {
                 self.logout.send(Void())
             } else {

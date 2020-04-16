@@ -8,9 +8,11 @@
 
 import Foundation
 
-struct ApiResponse: Codable {
+import Foundation
+
+struct ApiResponse<T: Codable>: Codable {
     let meta: Meta
-    let result: Data
+    let result: T?
 
     enum CodingKeys: String, CodingKey {
         case meta = "_meta"
@@ -20,8 +22,7 @@ struct ApiResponse: Codable {
     init(from decoder: Decoder) throws {
         let container = try! decoder.container(keyedBy: CodingKeys.self)
         self.meta   = try container.decode(Meta.self, forKey: .meta)
-        let dataDict: [String: Any] = try container.decode([String: Any].self, forKey: .result)
-        self.result  = dataDict.dataRepresentation ?? Data()
+        self.result  = try container.decodeIfPresent(T.self, forKey: .result)
     }
 }
 

@@ -13,36 +13,28 @@ enum APIError: Error, LocalizedError {
     }
 }
 
-class APIService: NSObject {
-    class var sharedAPIService: APIService {
-        struct Singleton {
-            static let sharedInstance: APIService = APIService()
-        }
-        return Singleton.sharedInstance
-    }
+class APIService<T: Codable>: NSObject {
     
-    func request(route :ApiRoute)  -> AnyPublisher<ApiResponse, APIError> {
+    func request(route :ApiRoute)  -> AnyPublisher<ApiResponse<T>, APIError> {
         let request = NSMutableURLRequest()
         request.httpMethod = route.method.rawValue
         request.url = URL(string: route.baseURL.absoluteString + route.path)!
         route.headers.forEach {
-            request.addValue($0.key, forHTTPHeaderField: $0.value)
+            request.addValue($0.value, forHTTPHeaderField: $0.key)
         }
         request.httpBody = (route.parameters ?? [:]).dataRepresentation
-        debugPrint(":::::::::::::::::::::::::::::::::::::::::::::::::::")
-        debugPrint(request.httpMethod)
-        debugPrint(request.url)
-        debugPrint(request.allHTTPHeaderFields)
-        debugPrint(request.httpBody)
-        debugPrint(":::::::::::::::::::::::::::::::::::::::::::::::::::")
 
         return URLSession.DataTaskPublisher(request: request as URLRequest, session: .shared)
             .tryMap { data, response in
+                debugPrint("*******************************************************************")
+                debugPrint(response)
+                debugPrint( String(decoding: data, as: UTF8.self))
+                debugPrint("*******************************************************************")
                 guard let httpResponse = response as? HTTPURLResponse, 200..<300 ~= httpResponse.statusCode else {
                     throw APIError.unknown
                 }
                 return data
-        }.decode(type: ApiResponse.self, decoder: JSONDecoder())
+        }.decode(type: ApiResponse<T>.self, decoder: JSONDecoder())
             .mapError { error in
                 if let error = error as? APIError {
                     return error

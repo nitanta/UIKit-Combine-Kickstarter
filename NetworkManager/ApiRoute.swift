@@ -45,7 +45,7 @@ extension ApiRoute {
     var headers: [String: String] {
         switch self {
         default:
-            return ["Authorization": "Bearer e1qnQivu9DZIuGDtCaHDX6s7AkJ-oG3P8uN2"
+            return ["Authorization": "Bearer m8g_qJend9DpOqvkeXE4W-fmb4plc2u4-PZv"
             ]
         }
         
